@@ -93,12 +93,7 @@ A modern, responsive HR Performance Dashboard built with Next.js, Tailwind CSS, 
    yarn build
    ```
 
-5. **Running Production Build**
-   ```bash
-   npm start
-   # or
-   yarn start
-   ```
+
 
 ## Project Structure
 
@@ -128,14 +123,12 @@ hr-dashboard/
 - Heroicons
 - TypeScript
 
-## Contributing
+#Screenshots
+![image](https://github.com/user-attachments/assets/b74951ef-b28d-40fb-84a7-241ba32d25de)
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+![image](https://github.com/user-attachments/assets/1aa54f1c-1b63-47dd-9443-8b0aa3ffea72)
+![image](https://github.com/user-attachments/assets/5ce5a10f-084a-47e6-ad83-bf913810bea0)
+![image](https://github.com/user-attachments/assets/1bb04f48-7ba5-4f50-b59c-1af0e11a4e7c)
+![image](https://github.com/user-attachments/assets/2a55db58-7ad5-48cd-ba5c-4839f507be79)
 
-## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
