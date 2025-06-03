@@ -23,20 +23,38 @@ interface DummyUser {
   phone: string;
 }
 
+interface Employee {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  age: number;
+  department: string;
+  performance: number;
+  address: string;
+  phone: string;
+  bio: string;
+}
+
 export default function Home() {
   const router = useRouter();
+
+  // Get state and actions from Zustand store
   const { employees, setEmployees, toggleBookmark, isBookmarked } = useStore();
+
+  // Local component state for search, filter, and loading
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
 
+  // Fetch employees on component mount
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
         setIsLoading(true);
         const response = await fetch("https://dummyjson.com/users?limit=20");
         const data = await response.json();
-        const processedEmployees = data.users.map((user: DummyUser) => ({
+        const processedEmployees: Employee[] = data.users.map((user: DummyUser) => ({
           id: user.id,
           firstName: user.firstName,
           lastName: user.lastName,
@@ -60,13 +78,16 @@ export default function Home() {
     fetchEmployees();
   }, [setEmployees]);
 
+  // Filter employees by search and department
   const filteredEmployees = employees.filter((employee) => {
     const matchesSearch =
       employee.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       employee.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       employee.email.toLowerCase().includes(searchTerm.toLowerCase());
+
     const matchesDepartment =
       !selectedDepartment || employee.department === selectedDepartment;
+
     return matchesSearch && matchesDepartment;
   });
 
@@ -83,6 +104,7 @@ export default function Home() {
 
   return (
     <div className="space-y-6">
+      {/* Header and Filters */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">
@@ -92,7 +114,9 @@ export default function Home() {
             {filteredEmployees.length} employees found
           </p>
         </div>
+
         <div className="flex flex-col gap-4 sm:flex-row">
+          {/* Search Input */}
           <div className="relative">
             <input
               type="text"
@@ -115,6 +139,8 @@ export default function Home() {
               />
             </svg>
           </div>
+
+          {/* Department Select */}
           <select
             className="rounded-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
             value={selectedDepartment}
@@ -130,6 +156,7 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Employee Cards Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filteredEmployees.map((employee) => (
           <Card
@@ -149,6 +176,9 @@ export default function Home() {
                 title={
                   isBookmarked(employee.id) ? "Remove bookmark" : "Add bookmark"
                 }
+                aria-label={
+                  isBookmarked(employee.id) ? "Remove bookmark" : "Add bookmark"
+                }
               >
                 {isBookmarked(employee.id) ? (
                   <StarIcon className="h-5 w-5 text-yellow-500" />
@@ -157,6 +187,7 @@ export default function Home() {
                 )}
               </button>
             </div>
+
             <div className="space-y-2">
               <p className="text-sm">
                 <span className="font-medium">Department:</span>{" "}
@@ -183,6 +214,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
+
             <div className="flex gap-2">
               <Button
                 variant="primary"
@@ -192,6 +224,7 @@ export default function Home() {
               >
                 View Details
               </Button>
+
               <Button
                 variant="outline"
                 size="sm"
@@ -212,6 +245,7 @@ export default function Home() {
         ))}
       </div>
 
+      {/* No employees found message */}
       {filteredEmployees.length === 0 && (
         <div className="flex h-[50vh] flex-col items-center justify-center space-y-4">
           <p className="text-lg text-gray-500">No employees found</p>
