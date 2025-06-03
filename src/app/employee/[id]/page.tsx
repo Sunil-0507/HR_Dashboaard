@@ -112,7 +112,7 @@ const getPerformanceColor = (rating: number) => {
 
 export default function EmployeePage() {
   const params = useParams();
-  const router = useRouter();
+  // const router = useRouter();
   const { employees, toggleBookmark, isBookmarked } = useStore();
   const [activeTab, setActiveTab] = useState("overview");
 
